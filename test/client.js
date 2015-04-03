@@ -15,4 +15,10 @@ module.exports = {
 		    test.done();
 		});
     },
+    testConnectBadPort: function (test) {
+		this.tesseract.connect('localhost:1234', function (err) {
+		    test.equals(err, 'Could not connect to host: localhost:1234');
+		    test.done();
+		});
+    },
 };
