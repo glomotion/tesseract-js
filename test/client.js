@@ -1,24 +1,40 @@
+var tesseract = require('../tesseract.js');
+
 module.exports = {
-    setUp: function (callback) {
-        this.tesseract = require('../tesseract.js');
-        callback();
-    },
     testConnect: function (test) {
-		this.tesseract.connect(null, function (err) {
-		    test.equals(err, null);
-		    test.done();
-		});
+        tesseract.connect(null, function (err, client) {
+            test.equals(err, null);
+            test.done();
+
+            client.close();
+        });
     },
+
     testConnectBadHost: function (test) {
-		this.tesseract.connect('nowhere', function (err) {
-		    test.equals(err, 'Could not connect to host: nowhere');
-		    test.done();
-		});
+        tesseract.connect('nowhere', function (err) {
+            test.equals(err, 'Could not connect to host: nowhere', err);
+            test.done();
+        });
     },
+
     testConnectBadPort: function (test) {
-		this.tesseract.connect('localhost:1234', function (err) {
-		    test.equals(err, 'Could not connect to host: localhost:1234');
-		    test.done();
-		});
+        tesseract.connect('localhost:1234', function (err) {
+            test.equals(err, 'Could not connect to host: localhost:1234', err);
+            test.done();
+        });
+    },
+
+    testSimpleQuery: function (test) {
+        tesseract.connect(null, function (err, client) {
+            test.equals(err, null);
+
+            client.fetch('SELECT 1 + 2', function (result) {
+            	test.ok(result.success);
+                test.equals(result.data[0].col1, 3);
+                test.done();
+
+                client.close();
+            });
+        });
     },
 };
