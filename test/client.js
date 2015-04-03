@@ -40,7 +40,7 @@ exports.testQueryError = function (test) {
 };
 
 exports.testMultipleQueries = function (test) {
-    var queries = 1000;
+    var queries = 10;
     var received = 0;
 
     function processResult(result, client) {
@@ -69,4 +69,13 @@ exports.testMultipleQueries = function (test) {
 exports.testDefaultPort = function (test) {
     test.equals(tesseract.defaultPort, 3679);
     test.done();
+};
+
+exports.testCallingCloseOnAnAlreadyClosedConnection = function (test) {
+    tesseract.connect(null, function (err, client) {
+        test.equals(err, null);
+        test.done();
+        client.close();
+        client.close();
+    });
 };
