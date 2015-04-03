@@ -28,4 +28,11 @@ TesseractClient.prototype.close = function () {
 	this.socket.destroy();
 }
 
+// Insert a new record. This is actually just a shorthand for writing the full
+// SQL.
+TesseractClient.prototype.insert = function (tableName, object, callback) {
+	var sql = 'INSERT INTO ' + tableName + ' ' + JSON.stringify(object);
+	this.fetch(sql, callback);
+}
+
 module.exports = TesseractClient
