@@ -37,4 +37,18 @@ module.exports = {
             });
         });
     },
+
+    testQueryError: function (test) {
+        tesseract.connect(null, function (err, client) {
+            test.equals(err, null);
+
+            client.fetch('SELECT "abc" + 1', function (result) {
+            	test.equals(result.success, false);
+            	test.equals(result.error, 'No such operator string + number.');
+                test.done();
+
+                client.close();
+            });
+        });
+    }
 };
