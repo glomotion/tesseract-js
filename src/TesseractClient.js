@@ -7,6 +7,7 @@ function TesseractClient(socket) {
 
 // Fetch the result of a SQL statement.
 TesseractClient.prototype.fetch = function (sql, callback) {
+	
 	// The SQL has to be packaged up in an object and sent as JSON to the
 	// server.
 	var message = {
