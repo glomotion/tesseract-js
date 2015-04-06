@@ -36,4 +36,4 @@ TesseractClient.prototype.insert = function (tableName, object, callback) {
 	this.fetch(sql, callback);
 }
 
-module.exports = TesseractClient
+module.exports = TesseractClient;
