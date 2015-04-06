@@ -6,6 +6,7 @@ exports.defaultPort = 3679;
 // Try to connect to the server. If the connection is successful then a
 // TesseractClient will be passed back - otherwise you will receive the error.
 exports.connect = function (host, callback) {
+	
 	// A `null` host means we want to connect to `localhost`.
 	if (null == host) {
 		host = 'localhost';
