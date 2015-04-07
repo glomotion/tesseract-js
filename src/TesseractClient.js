@@ -20,20 +20,20 @@ TesseractClient.prototype.fetch = function (sql, callback) {
 	this.socket.on('data', function (result) {
 		callback(JSON.parse(result));
 	});
-}
+};
 
 // Close (destroy) the client connection. It's always polite to close the
 // connection when your finished with it, although there is no requirement to do
 // so.
 TesseractClient.prototype.close = function () {
 	this.socket.destroy();
-}
+};
 
 // Insert a new record. This is actually just a shorthand for writing the full
 // SQL.
 TesseractClient.prototype.insert = function (tableName, object, callback) {
 	var sql = 'INSERT INTO ' + tableName + ' ' + JSON.stringify(object);
 	this.fetch(sql, callback);
-}
+};
 
 module.exports = TesseractClient;

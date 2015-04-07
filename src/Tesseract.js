@@ -8,7 +8,7 @@ exports.defaultPort = 3679;
 exports.connect = function (host, callback) {
 	
 	// A `null` host means we want to connect to `localhost`.
-	if (null == host) {
+	if (null === host) {
 		host = 'localhost';
 	}
 
@@ -28,4 +28,4 @@ exports.connect = function (host, callback) {
 	socket.on('error', function () {
 		callback('Could not connect to host: ' + host);
 	});
-}
+};

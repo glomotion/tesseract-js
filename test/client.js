@@ -57,11 +57,13 @@ exports.testMultipleQueries = function (test) {
     tesseract.connect(null, function (err, client) {
         test.equals(err, null);
 
+        function callback(result) {
+            processResult(result, client);
+        }
+
         // Send off a bunch of queries
         for (var i = 0; i < queries; ++i) {
-            client.fetch('SELECT 1 + 2', function (result) {
-                processResult(result, client);
-            });
+            client.fetch('SELECT 1 + 2', callback);
         }
     });
 };
