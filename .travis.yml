@@ -7,7 +7,7 @@ before_install:
   # Download the bleeding edge tesseract.
   - "curl -L https://github.com/elliotchance/tesseract/archive/master.zip > tesseract.zip"
   - "unzip tesseract.zip"
-  - "pip install -r tesseract-master/requirements.txt"
+  - "sudo pip install -r tesseract-master/requirements.txt"
 
   # Start tesseract server.
   - "tesseract-master/bin/tesseract &"
