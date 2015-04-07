@@ -17,7 +17,7 @@ before_install:
   - "sudo pip install -r tesseract-master/requirements.txt"
 
   # Start tesseract server.
-  - "tesseract-master/bin/tesseract &>>tesseract.txt 2>&1"
+  - "tesseract-master/bin/tesseract >>tesseract.txt 2>&1 &"
 
 script:
   # Run unit tests.
