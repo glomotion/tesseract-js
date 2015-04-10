@@ -10,7 +10,8 @@
     "node-redis": "~0.1.7"
   },
   "devDependencies": {
-    "nodeunit": "*"
+    "nodeunit": "*",
+    "jshint": "*"
   },
   "license": "MIT"
 }

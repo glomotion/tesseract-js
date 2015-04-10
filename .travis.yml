@@ -1,0 +1,27 @@
+language: node_js
+node_js:
+  - "0.12"
+  - "0.11"
+  - "0.10"
+  - "0.8"
+  - "0.6"
+  - "iojs"
+  - "iojs-v1.0.4"
+services:
+  - redis-server
+
+before_install:
+  # Download the bleeding edge tesseract.
+  - "curl -L https://github.com/elliotchance/tesseract/archive/master.zip > tesseract.zip"
+  - "unzip tesseract.zip"
+  - "sudo pip install -r tesseract-master/requirements.txt"
+
+  # Start tesseract server.
+  - "tesseract-master/bin/tesseract >>tesseract.txt 2>&1 &"
+
+script:
+  # Run unit tests.
+  - node_modules/.bin/nodeunit test
+
+  # Lint JavaScript.
+  - node_modules/.bin/jshint src

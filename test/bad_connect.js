@@ -14,4 +14,4 @@ exports.testConnectingWithBadPort = function (test) {
         test.equals(err, 'Could not connect to host: localhost:1234', err);
         test.done();
     });
-}
+};
