@@ -7,7 +7,7 @@
     "tesseract"
   ],
   "dependencies": {
-    "node-redis": "~0.1.7"
+    "redis": "*"
   },
   "devDependencies": {
     "nodeunit": "*",
