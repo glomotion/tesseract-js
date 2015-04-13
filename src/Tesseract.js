@@ -1,14 +1,25 @@
+// When running nodeunit any errors are supressed silently. Seems a bit stupid
+// but we have to put this in so that errors will display:
+// http://stackoverflow.com/a/20038890/1470961
 process.on('uncaughtException', function(err) {
-  console.error(err.stack);
+    console.error(err.stack);
 });
 
 var TesseractClient = require('./TesseractClient.js');
 
-// Unless we are told otherwise there default port the server runs on is...
+/**
+ * The default port number for the tesseract server.
+ * @type {Number}
+ */
 exports.defaultPort = 3679;
 
-// Try to connect to the server. If the connection is successful then a
-// TesseractClient will be passed back - otherwise you will receive the error.
+/**
+ * Try to connect to the server. If the connection is successful then a
+ * TesseractClient will be passed back - otherwise you will receive the error.
+ * @param  {String}   host     The host, which may also include the port number.
+ * Some examples are 'localhost', '1.2.3.4:1234', 'mydomain.com'.
+ * @param  {Function} callback(err, result)
+ */
 exports.connect = function (host, callback) {
     // A `null` host means we want to connect to `localhost`.
     if (null === host) {
