@@ -21,15 +21,20 @@ ListenBuilder.prototype.then = function(callback) {
 
     // Now setup the listener on Redis.
     var redis = require('redis');
-    var client = redis.createClient();
+    this.listener = redis.createClient();
 
-    client.on("message", function (channel, message) {
+    this.listener.on("message", function (channel, message) {
         callback(JSON.parse(message));
-        client.unsubscribe();
-        client.quit();
     });
 
-    client.subscribe(notificationName);
+    this.listener.subscribe(notificationName);
+
+    return this;
 };
+
+ListenBuilder.prototype.stop = function() {
+    this.listener.unsubscribe();
+    this.listener.quit();
+}
 
 module.exports = ListenBuilder;
