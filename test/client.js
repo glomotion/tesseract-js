@@ -87,3 +87,14 @@ exports.testCallingCloseOnAnAlreadyClosedConnection = function (test) {
         client.close();
     });
 };
+
+exports.testFetchDoesNotNeedToHaveACallback = function(test) {
+    test.expect(1);
+
+    tesseract.connect(null, function (err, client) {
+        test.equals(err, null);
+        client.fetch('SELECT 1 + 2');
+        test.done();
+        client.close();
+    });
+};

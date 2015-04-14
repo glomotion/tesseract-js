@@ -18,7 +18,10 @@ function TesseractClient(socket) {
     this.socket.on('data', function(result) {
         // The current job is always the first element.
         var job = _this.queue[0];
-        job.callback(JSON.parse(result));
+
+        if (typeof job.callback === 'function') {
+            job.callback(JSON.parse(result));
+        }
 
         // Remove the current job from the queue.
         _this.queue.shift();
