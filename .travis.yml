@@ -19,6 +19,9 @@ before_install:
   # Start tesseract server.
   - "tesseract-master/bin/tesseract >>tesseract.txt 2>&1 &"
 
+  # The npm on travis is quite old, update it
+  - npm install -g npm@latest
+
 script:
   # Run unit tests.
   - node_modules/.bin/nodeunit test
