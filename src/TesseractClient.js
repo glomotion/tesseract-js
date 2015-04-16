@@ -29,7 +29,7 @@ function TesseractClient(socket) {
         // Trigger the next job to run.
         _this._next_job();
     });
-};
+}
 
 /**
  * Fetch the result of a SQL statement.
@@ -82,7 +82,7 @@ TesseractClient.prototype.listen = function(tableName) {
  */
 TesseractClient.prototype._next_job = function() {
     // If there is nothing in the queue, we just stop here.
-    if (this.queue.length == 0) {
+    if (this.queue.length === 0) {
         return;
     }
 

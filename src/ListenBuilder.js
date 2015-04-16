@@ -14,7 +14,7 @@ function ListenBuilder(client, tableName) {
     // Lets generate a random name for the notification now. This isn't
     // important for outside this class so you will not need this value.
     this.notificationName = Math.random().toString(36).substring(7);
-};
+}
 
 /**
  * Add an expression to the listener to specify which objects will send the
