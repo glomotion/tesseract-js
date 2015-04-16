@@ -1,4 +1,4 @@
-// When running nodeunit any errors are supressed silently. Seems a bit stupid
+// When running nodeunit any errors are suppressed silently. Seems a bit stupid
 // but we have to put this in so that errors will display:
 // http://stackoverflow.com/a/20038890/1470961
 process.on('uncaughtException', function(err) {
@@ -34,7 +34,10 @@ exports.connect = function (host, callback) {
 
     // Create the client socket and connect to the server.
     var socket = require('net').Socket();
-    socket.connect(server[1], server[0], function () {
+    socket.connect(server[1], server[0]);
+
+    // Hopefully this happens.
+    socket.on('connect', function () {
         callback(null, new TesseractClient(socket));
     });
 

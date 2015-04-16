@@ -2,14 +2,31 @@ var tesseract = require('../src/Tesseract.js');
 
 // Tests for listening to notifications.
 
-exports.testListenToAll = function (test) {
+function connectAndRun(test, body) {
     test.expect(2);
 
     tesseract.connect(null, function (err, client) {
         test.equals(err, null);
+        body(client);
+    });
+}
 
+var insertInterval;
+
+function fireInserts(client) {
+    insertInterval = setInterval(function () {
+        client.insert('people', {
+            'name': 'Joe Bloggs'
+        });
+    }, 100);
+}
+
+exports.testListenToAll = function(test) {
+    connectAndRun(test, function(client) {
         var listener = client.listen('people')
             .then(function (data) {
+                clearInterval(insertInterval);
+
                 listener.stop();
                 test.equals(JSON.stringify(data), '{"name":"Joe Bloggs"}');
                 test.done();
@@ -17,26 +34,17 @@ exports.testListenToAll = function (test) {
                 client.close();
             });
 
-        // We need a slight timeout to give the subscription time to setup.
-        setTimeout(function () {
-            client.insert('people', {
-                'name': 'Joe Bloggs'
-            }, function (err) {
-                // Do nothing.
-            });
-        }, 200);
+        fireInserts(client);
     });
 };
 
-exports.testListenWithFilterThatMatches = function (test) {
-    test.expect(2);
-
-    tesseract.connect(null, function (err, client) {
-        test.equals(err, null);
-
+exports.testListenWithFilterThatMatches = function(test) {
+    connectAndRun(test, function(client) {
         var listener = client.listen('people')
             .where('name like "Joe %"')
             .then(function (data) {
+                clearInterval(insertInterval);
+
                 listener.stop();
                 test.equals(JSON.stringify(data), '{"name":"Joe Bloggs"}');
                 test.done();
@@ -44,23 +52,12 @@ exports.testListenWithFilterThatMatches = function (test) {
                 client.close();
             });
 
-        // We need a slight timeout to give the subscription time to setup.
-        setTimeout(function () {
-            client.insert('people', {
-                'name': 'Joe Bloggs'
-            }, function (err) {
-                // Do nothing.
-            });
-        }, 200);
+        fireInserts(client);
     });
 };
 
 exports.testListenWithFilterThatDoesNotMatch = function (test) {
-    test.expect(2);
-
-    tesseract.connect(null, function (err, client) {
-        test.equals(err, null);
-
+    connectAndRun(test, function(client) {
         function testDone() {
             test.done();
             client.close();
@@ -73,21 +70,16 @@ exports.testListenWithFilterThatDoesNotMatch = function (test) {
                 testDone();
             });
 
-        // We need a slight timeout to give the subscription time to setup.
-        setTimeout(function () {
-            client.insert('people', {
-                'name': 'Joe Bloggs'
-            }, function (err) {
-                // Do nothing.
-            });
-        }, 200);
+        fireInserts(client);
 
-        // An even further timeout to make sure we didn't receive the
-        // notification.
+        // With all the notifications firing 10 times a second, we shouldn't 
+        // hear anything for a whole second.
         setTimeout(function() {
+            clearInterval(insertInterval);
+
             listener.stop();
             test.ok(true);
             testDone();
-        }, 500);
+        }, 1000);
     });
 };
