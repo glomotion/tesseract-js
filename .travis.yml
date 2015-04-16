@@ -20,7 +20,7 @@ before_install:
   - "tesseract-master/bin/tesseract >>tesseract.txt 2>&1 &"
 
   # The npm on travis is quite old, update it
-  - npm install -g npm@latest
+  - npm install npm@latest
 
 script:
   # Run unit tests.
