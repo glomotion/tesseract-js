@@ -12,8 +12,10 @@ function ListenBuilder(client, tableName) {
     this.tableName = tableName;
 
     // Lets generate a random name for the notification now. This isn't
-    // important for outside this class so you will not need this value.
-    this.notificationName = Math.random().toString(36).substring(7);
+    // important for outside this class so you will not need this value. Make
+    // sure the notification does not start with a number which may cause the
+    // universe to explode.
+    this.notificationName = '_' + Math.random().toString(36).substring(7);
 }
 
 /**
