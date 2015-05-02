@@ -3,6 +3,8 @@ var tesseract = require('../src/Tesseract.js');
 // Here are the general tests for the client.
 
 exports.testConnect = function (test) {
+    test.expect(1);
+
     tesseract.connect(null, function (err, client) {
         test.equals(err, null);
         test.done();
@@ -12,6 +14,8 @@ exports.testConnect = function (test) {
 };
 
 exports.testSimpleQuery = function (test) {
+    test.expect(3);
+
     tesseract.connect(null, function (err, client) {
         test.equals(err, null);
 
@@ -26,6 +30,8 @@ exports.testSimpleQuery = function (test) {
 };
 
 exports.testQueryError = function (test) {
+    test.expect(3);
+
     tesseract.connect(null, function (err, client) {
         test.equals(err, null);
 
@@ -78,6 +84,17 @@ exports.testCallingCloseOnAnAlreadyClosedConnection = function (test) {
         test.equals(err, null);
         test.done();
         client.close();
+        client.close();
+    });
+};
+
+exports.testFetchDoesNotNeedToHaveACallback = function(test) {
+    test.expect(1);
+
+    tesseract.connect(null, function (err, client) {
+        test.equals(err, null);
+        client.fetch('SELECT 1 + 2');
+        test.done();
         client.close();
     });
 };
