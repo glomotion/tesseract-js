@@ -62,4 +62,5 @@ Type sensivitivty in terms of comparing any variable that is tdiffernt type. For
 > true
 
 require("tesseract");
+
 var db = tesseract.connect('labs.tesseract.com', 'tim@glo.com', 'mypass');
